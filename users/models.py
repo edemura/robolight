@@ -479,6 +479,14 @@ class Sequences(models.Model):
 
     def __str__(self):
         return str(self.sequence_name)
+    
+    @classmethod
+    def make_choices():
+        ch1=[]
+        obj=Sequences.objects.filter(is_active=True)
+        for i in obj:
+            ch1.append([i, obj.sequence_name])
+        return ch1
 
 
 class Orders(models.Model):
