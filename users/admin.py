@@ -12,6 +12,7 @@ from users.models import TaskJson
 from users.models import ManualTask
 from users.models import Orders
 from users.models import Sequences
+from users.models import Tube_qty
 
 from users.models import TubeType, TrayTube, Analysis, AnalysisSet, DataFile
 
@@ -195,3 +196,7 @@ class MyAdminSite(admin.AdminSite):
 @admin.register(Sequences) 
 class SequencesAdmin(admin.ModelAdmin):
     list_display = ['sequence_name','is_active', 'digits_number', 'current_number']
+
+@admin.register(Tube_qty) 
+class Tube_qtyAdmin(admin.ModelAdmin):
+    list_display = ['order_id','tube_type_id', 'tube_qty']
