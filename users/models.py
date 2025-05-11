@@ -480,12 +480,12 @@ class Sequences(models.Model):
     def __str__(self):
         return str(self.sequence_name)
     
-    @classmethod
+    @staticmethod
     def make_choices():
         ch1=[]
         obj=Sequences.objects.filter(is_active=True)
         for i in obj:
-            ch1.append([i, obj.sequence_name])
+            ch1.append([i.pk, i])
         return ch1
 
 
@@ -513,6 +513,8 @@ class Orders(models.Model):
     barcode_type=models.TextField(null=True, default=None, verbose_name="Тип ШК")
     barcode_number=models.TextField(null=True, default=None, verbose_name="Номер ШК")
     json=models.JSONField(null=True, default=None, verbose_name="JSON")
+
+    tubes = models.ManyToManyField("Tube_qty")
 
     
     #file=models.TextField(null=True, default=None, verbose_name="Имя файла")

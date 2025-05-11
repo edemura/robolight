@@ -6,12 +6,3 @@
         <input type="submit" value="Создать">
     </form>
 </div>
-
-<div>
-    <form action="/ckdl/" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <p> Создать заказ для лаборатории ЦКДЛ</p>
-        <input type="submit" value="Создать ЦКДЛ">
-    </form>
-</div>

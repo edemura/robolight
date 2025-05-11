@@ -13,4 +13,4 @@ ch = [[1, 'ЦКДЛ'], [2, 'Внутренняя лаборатория']]
 
 class OrdersForm(forms.Form):
     tube_number = forms.IntegerField(max_value=10, min_value=0)
-    destination = forms.ChoiceField(choices=Sequences.make_choices, label='Для направления в ')
+    destination = forms.ChoiceField(choices=Sequences.make_choices(), label='Для направления в ')
