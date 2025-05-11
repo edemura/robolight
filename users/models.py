@@ -504,6 +504,7 @@ class Orders(models.Model):
 
     barcode_type=models.TextField(null=True, default=None, verbose_name="Тип ШК")
     barcode_number=models.TextField(null=True, default=None, verbose_name="Номер ШК")
+    json=models.JSONField(null=True, default=None, verbose_name="JSON")
 
     
     #file=models.TextField(null=True, default=None, verbose_name="Имя файла")

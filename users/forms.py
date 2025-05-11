@@ -7,4 +7,4 @@ class BroadcastForm(forms.Form):
 
 
 class OrdersForm(forms.Form):
-    tube_number = forms.IntegerField(max_value=10)
+    tube_number = forms.IntegerField(max_value=10, min_value=0)
