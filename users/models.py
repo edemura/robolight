@@ -494,7 +494,7 @@ class Orders(models.Model):
         verbose_name="Вид последовательности"
     )
 
-    tube_qty = models.ForeignKey(
+    tube_type = models.ForeignKey(
       "users.TubeType",
       on_delete=models.CASCADE,
       verbose_name="Тип пробирки"
