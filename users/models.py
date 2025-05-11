@@ -477,6 +477,9 @@ class Sequences(models.Model):
     digits_number=models.IntegerField(null=False, verbose_name="Количество знаков(длина последовательности)")
     current_number=models.IntegerField(null=True, verbose_name="Текущее значение")
 
+    def __str__(self):
+        return str(self.sequence_name)
+
 class Orders(models.Model):
     class Meta:
         verbose_name=_('Заказ')
@@ -492,5 +495,5 @@ class Orders(models.Model):
     barcode_type=models.TextField(null=True, default=None, verbose_name="Тип ШК")
     barcode_number=models.TextField(null=True, default=None, verbose_name="Номер ШК")
 
-
+    
     #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
