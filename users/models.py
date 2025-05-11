@@ -517,6 +517,7 @@ class Tube_qty(models.Model):
        default=None,
         on_delete=models.CASCADE,
         verbose_name="Номер заказа"
+    )
 
     tube_type_id=models.ForeignKey(
        "users.TubeType",
