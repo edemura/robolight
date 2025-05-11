@@ -484,7 +484,7 @@ class Orders(models.Model):
 
     sequence_id=models.ForeignKey(
        null=True, 
-       default=None
+       default=None,
        "users.Sequences",
         on_delete=models.CASCADE,
         verbose_name="Вид последовательности"
