@@ -480,6 +480,7 @@ class Sequences(models.Model):
     def __str__(self):
         return str(self.sequence_name)
 
+
 class Orders(models.Model):
     class Meta:
         verbose_name=_('Заказ')
@@ -492,8 +493,41 @@ class Orders(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Вид последовательности"
     )
+
+    tube_qty_ = models.ForeignKey(
+      "users.TubeType",
+      on_delete=models.CASCADE,
+      verbose_name="Тип пробирки"
+  )
+
     barcode_type=models.TextField(null=True, default=None, verbose_name="Тип ШК")
     barcode_number=models.TextField(null=True, default=None, verbose_name="Номер ШК")
 
     
     #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
+
+class Tube_qty(models.Model):
+    class Meta:
+        verbose_name=_('Пробирки в заказе')
+        verbose_name_plural=_('Пробирки в заказе')
+
+    order_id=models.ForeignKey(
+       "users.Orders",
+       null=True, 
+       default=None,
+        on_delete=models.CASCADE,
+        verbose_name="Номер заказа"
+
+    tube_type_id=models.ForeignKey(
+       "users.TubeType",
+       null=True, 
+       default=None,
+        on_delete=models.CASCADE,
+        verbose_name="Вид пробирки"
+    )
+
+    tube_qty = models.IntegerField(
+        null=True, 
+       default=1,
+       verbose_name="Количество")
+    
