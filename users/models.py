@@ -496,6 +496,8 @@ class Orders(models.Model):
 
     tube_type = models.ForeignKey(
       "users.TubeType",
+      null=True,
+      default=None,
       on_delete=models.CASCADE,
       verbose_name="Тип пробирки"
   )
