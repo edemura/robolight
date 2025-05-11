@@ -465,18 +465,7 @@ class DataFile(models.Model):
 #DataFile.read_data()
 
 #Заказы - моделька для тестирования вывода в форму
-# поля: тип последовательности ШК, номер шк, 
-        
-class Orders(models.Model):
-    class Meta:
-        verbose_name=_('Заказ')
-        verbose_name_plural=_('Заказы')
-
-    barcode_type=models.TextField(null=True, default=None, verbose_name="Тип ШК")
-    barcode_number=models.TextField(null=True, default=None, verbose_name="Номер ШК")
-
-
-    #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
+# поля: тип последовательности ШК, номер шк,     
     
 class Sequences(models.Model):
     class Meta:
@@ -488,3 +477,18 @@ class Sequences(models.Model):
     digits_number=models.IntegerField(null=False, verbose_name="Количество знаков(длина последовательности)")
     current_number=models.IntegerField(null=True, verbose_name="Текущее значение")
 
+class Orders(models.Model):
+    class Meta:
+        verbose_name=_('Заказ')
+        verbose_name_plural=_('Заказы')
+
+    sequence_id=models.ForeignKey(
+       "users.Sequences",
+        on_delete=models.CASCADE,
+        verbose_name="Вид последовательности"
+    )
+    barcode_type=models.TextField(null=True, default=None, verbose_name="Тип ШК")
+    barcode_number=models.TextField(null=True, default=None, verbose_name="Номер ШК")
+
+
+    #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
