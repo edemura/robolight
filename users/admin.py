@@ -13,6 +13,7 @@ from users.models import ManualTask
 from users.models import Orders
 from users.models import Sequences
 from users.models import Tube_qty
+from users.models import Post_data
 
 from users.models import TubeType, TrayTube, Analysis, AnalysisSet, DataFile
 
@@ -213,3 +214,8 @@ class OrdersAdmin(admin.ModelAdmin):
         
     ]
     inlines = [Tube_qtyInline]
+
+
+@admin.register(Post_data) 
+class Post_dataAdmin(admin.ModelAdmin):
+    list_display = ['text']

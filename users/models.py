@@ -559,3 +559,13 @@ class Tube_qty(models.Model):
     
     #def __str__(self):
     #    return str(self.sequence_name)
+
+    class Post_data(models.Model):
+        class Meta:
+            verbose_name=_('Данные запросов POST')
+            verbose_name_plural=_('Данные запросов POST')
+        
+        tube_type_id=models.TextField(
+            null=True, 
+            default=None,
+            verbose_name="Тело ответа")
