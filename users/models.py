@@ -516,7 +516,9 @@ class Orders(models.Model):
       default=None,
       on_delete=models.CASCADE,
       verbose_name="Тип пробирки"
-  )
+    )
+
+    create_datetime = models.DateTimeField(null=True, auto_now=False, auto_now_add=True, verbose_name='Создано')
 
     barcode_type=models.TextField(null=True, default=None, verbose_name="Тип ШК")
     barcode_number=models.TextField(null=True, default=None, verbose_name="Номер ШК")
@@ -524,7 +526,10 @@ class Orders(models.Model):
 
     tubes = models.ManyToManyField("Tube_qty")
 
-    
+    def __str__(self):
+        return str(Sequences.objects.get(pk=self.sequence_id).sequence_name +' #'+self.pk+' от'+self.create_datetime)
+
+
     #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
 
 class Tube_qty(models.Model):
@@ -553,3 +558,5 @@ class Tube_qty(models.Model):
        default=1,
        verbose_name="Количество")
     
+    #def __str__(self):
+    #    return str(self.sequence_name)
