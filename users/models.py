@@ -522,6 +522,9 @@ class Orders(models.Model):
     def __str__(self):
         return str(self.pk)+' от '+str(self.create_datetime)
 
+    def refresh_from_db(self):
+        self.total_tubes_qty = 2
+        super().refresh_from_db()
 
     #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
 

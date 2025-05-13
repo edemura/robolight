@@ -206,7 +206,7 @@ class Tube_qtyInline(admin.StackedInline):
 
 @admin.register(Orders) 
 class OrdersAdmin(admin.ModelAdmin):
-    list_display = ['create_datetime','sequence_id']
+    list_display = ['create_datetime','sequence_id','total_tubes_qty']
     
     fieldsets = [
         (None, {"fields": ["sequence_id"]}),
