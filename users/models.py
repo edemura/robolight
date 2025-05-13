@@ -346,6 +346,9 @@ class TubeType(models.Model):
   volume = models.CharField(max_length=255, verbose_name="Объем")
   color = models.CharField(max_length=255, verbose_name="Цвет")
   filler = models.CharField(max_length=255, verbose_name="Наполнитель")
+
+  tray_num = models.IntegerField(default=0, null=True, verbose_name="Номер лотка")
+
   def __str__(self):
     return self.volume+' '+self.color+' '+self.filler
   
@@ -522,9 +525,9 @@ class Orders(models.Model):
     def __str__(self):
         return str(self.pk)+' от '+str(self.create_datetime)
 
-    def refresh_from_db(self):
-        self.total_tubes_qty = 2
-        super().refresh_from_db()
+    #def refresh_from_db(self):
+    #    self.total_tubes_qty = 2
+    #    super().refresh_from_db()
 
     #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
 
