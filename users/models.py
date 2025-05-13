@@ -514,6 +514,11 @@ class Orders(models.Model):
 
     tubes = models.ManyToManyField("Tube_qty")
 
+    total_tubes_qty = models.IntegerField(
+        null=True, 
+       default=0,
+       verbose_name="Пробирок в заказе")
+
     def __str__(self):
         return str(self.pk)+' от '+str(self.create_datetime)
 
