@@ -13,6 +13,8 @@ from users.models import Incomejson
 from users.models import Orders
 from users.models import TubeType
 from users.models import Post_data
+from users.models import Sequences
+from users.models import Tube_qty
 from django.core import serializers
 
 from django.shortcuts import render
@@ -110,11 +112,27 @@ def orders_request(request):
         data = Post_data()
         data.text=request.POST
         data.save()
-        #if form.is_valid():
-        #    order = Orders()
-        #    order.barcode_number = form.cleaned_data['tube_number']
-        #    order.barcode_type = form.cleaned_data['tube_number']
-        #    order.save()
+        if form.is_valid():
+            order = Orders()
+            order.sequence_id = Sequences.objects.get(pk=form.cleaned_data['destination'])
+            #order.barcode_type = form.cleaned_data['tube_number']
+            order.save()
+            
+            tubes = TubeType.objects.all()
+            for tube in tubes:
+
+                tube_qty = Tube_qty()
+                tube_qty.order_id = order
+                tube_qty.tube_type_id = TubeType.objects.get(pk=tube.id)
+                number = request.POST[str(TubeType.objects.get(pk=tube.id).id)]
+                if number != '':
+                    #number = 0
+                    tube_qty.tube_qty = number
+                    tube_qty.save()
+
+            #Тут мы должны сослаться на таск, который создаст Robo7Task
+
+
         #    return HttpResponseRedirect("/orders/")
         
         
@@ -123,6 +141,6 @@ def orders_request(request):
     else:
         form = OrdersForm()
         tubes = TubeType.objects.all()
-    return render(request, "order.html", {"form": form, "tubes":tubes})
+    return render(request, "order.html", {"form": form, "tubes": tubes})
     #return render(request, "order.html")
 

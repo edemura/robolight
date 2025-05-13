@@ -4,7 +4,7 @@
         {{ form }}
         <p> Создать заказ для внутренней лаборатории</p>
         {% for tube in tubes %}
-        <li>{{ tube }} <input type="number" id={{ tube }} name={{ tube }} min="1" max="5" default="0" /></li>
+        <li>{{ tube }} <input type="number" id={{ tube.id }} name={{ forloop.counter }} min="1" max="5" default="0" /></li>
         {% endfor %}
         <input type="submit" value="Создать">
     </form>
