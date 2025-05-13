@@ -206,10 +206,10 @@ class Tube_qtyInline(admin.StackedInline):
 
 @admin.register(Orders) 
 class OrdersAdmin(admin.ModelAdmin):
-    list_display = ['barcode_type','barcode_number',]
+    list_display = ['create_datetime','sequence_id']
     
     fieldsets = [
-        (None, {"fields": ["barcode_type", "barcode_number"]}),
+        (None, {"fields": ["sequence_id"]}),
         
     ]
     inlines = [Tube_qtyInline]
