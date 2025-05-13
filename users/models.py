@@ -527,7 +527,7 @@ class Orders(models.Model):
     tubes = models.ManyToManyField("Tube_qty")
 
     def __str__(self):
-        return str(Sequences.objects.get(pk=self.sequence_id).sequence_name +' #'+self.pk+' от'+self.create_datetime)
+        return (Sequences.objects.get(pk=self.sequence_id).sequence_name +' #'+str(self.pk)+' от'+str(self.create_datetime))
 
 
     #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
