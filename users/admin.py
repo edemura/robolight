@@ -152,9 +152,7 @@ class DataFileAdmin(admin.ModelAdmin):
     list_display = ['file', ]
     actions = ['read_data']
 
-@admin.register(Orders) 
-class OrdersAdmin(admin.ModelAdmin):
-    list_display = ['barcode_type','barcode_number',]
+
 
 
 # from dtb.urls import urlpatterns
@@ -200,3 +198,18 @@ class SequencesAdmin(admin.ModelAdmin):
 @admin.register(Tube_qty) 
 class Tube_qtyAdmin(admin.ModelAdmin):
     list_display = ['order_id','tube_type_id', 'tube_qty']
+
+
+class Tube_qtyInline(admin.StackedInline):
+    model = Tube_qty
+    extra = 3 
+
+@admin.register(Orders) 
+class OrdersAdmin(admin.ModelAdmin):
+    list_display = ['barcode_type','barcode_number',]
+    
+    fieldsets = [
+        (None, {"fields": ["barcode_type", "barcode_number"]}),
+        
+    ]
+    inlines = [Tube_qtyInline]

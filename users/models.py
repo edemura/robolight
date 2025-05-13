@@ -348,7 +348,15 @@ class TubeType(models.Model):
   filler = models.CharField(max_length=255, verbose_name="Наполнитель")
   def __str__(self):
     return self.volume+' '+self.color+' '+self.filler
-
+  
+  @staticmethod
+  def make_choices():
+    
+    ch1=[]
+    obj=TubeType.objects.all()
+    for i in obj:
+        ch1.append(i)
+    return ch1
 
 # Пробирки в лотках
 
