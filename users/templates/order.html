@@ -12,9 +12,19 @@
     <form class="order-form" action="/orders/" method="post">
         {% csrf_token %}
         <div class="form-row">
-            <label for="{{ form.destination.id_for_label }}">{{ form.destination.label }}</label>
-            <div class="form-field">
-                {{ form.destination }}
+            <label>Для направления в</label>
+            <div class="button-select-group">
+                {% for sequence in form.destination.field.choices %}
+                <label class="button-option">
+                    <input type="radio" 
+                           name="destination" 
+                           value="{{ sequence.0 }}"
+                           id="destination_{{ sequence.0 }}"
+                           {% if forloop.first %}checked{% endif %}
+                           required>
+                    {{ sequence.1 }}
+                </label>
+                {% endfor %}
             </div>
         </div>
         
