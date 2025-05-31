@@ -13,7 +13,9 @@
         {% csrf_token %}
         <div class="form-row">
             <label for="{{ form.destination.id_for_label }}">{{ form.destination.label }}</label>
-            {{ form.destination }}
+            <div class="form-field">
+                {{ form.destination }}
+            </div>
         </div>
         
         <ul class="tube-list">
@@ -160,42 +162,3 @@
     })();
 </script>
 {% endblock %}
-
-<style>
-    p {
-      color: blue;
-      font-size: 20px;
-    }
-    div {
-      margin-top: 10%;  
-      margin-left: 10%;
-      align-self: center;
-      font-size: 26px;
-    }
-    form {
-      margin-top: 10%;  
-      margin-left: 10%;
-      align-self: center;
-      font-size: 26px;
-    }
-        
-    
-    .spinner-arrows {
-    position: absolute;
-    right: 5px;
-    display: flex;
-    flex-direction: column;
-    pointer-events: none;
-    }
-
-    /* Пользовательская кнопка для увеличения значения */
-    .spinner-arrows .up {
-    background-color: blue;
-    }
-
-    /* Пользовательская кнопка для уменьшения значения */
-    .spinner-arrows .down {
-    background-color: red;
-    }
-    
-  </style>

@@ -180,11 +180,14 @@ label {
   color: #4a5568;
 }
 
-/* Inline Form Field Styles */
+/* Form Row Styles */
 .form-row {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0;
+  margin-top: 0;
 }
 
 .form-row > label {
@@ -192,27 +195,50 @@ label {
   color: #2d3748;
   font-size: 1.1rem;
   white-space: nowrap;
+  margin: 0;
 }
 
-.form-row select {
+.form-row .form-field {
   flex: 1;
   min-width: 200px;
-  padding: 0.5rem;
+}
+
+.form-row .button-select-group {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+}
+
+.button-select-group input[type="radio"] {
+  display: none;
+}
+
+.button-select-group label {
+  background: #f8fafc;
+  color: #4a5568;
+  padding: 0.75rem 1.5rem;
   border: 2px solid #e2e8f0;
-  border-radius: 6px;
-  background-color: white;
+  border-radius: 8px;
+  font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0;
+  text-align: center;
+  min-width: 120px;
 }
 
-.form-row select:hover {
-  border-color: #cbd5e0;
+.button-select-group label:hover {
+  background: #edf2f7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.form-row select:focus {
-  border-color: #4299e1;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
-  outline: none;
+.button-select-group input[type="radio"]:checked + label {
+  background: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
 }
 
 /* Button-like Select Styles */
@@ -256,44 +282,6 @@ label {
 .form-row select.button-select {
   min-width: 250px;
   margin-left: 1rem;
-}
-
-/* Button Group Select Styles */
-.button-select-group {
-  display: flex;
-  gap: 10px;
-  margin-left: 1rem;
-}
-
-.button-select-group input[type="radio"] {
-  display: none;
-}
-
-.button-select-group label {
-  background: #f8fafc;
-  color: #4a5568;
-  padding: 0.75rem 1.5rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin: 0;
-  text-align: center;
-}
-
-.button-select-group label:hover {
-  background: #edf2f7;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.button-select-group input[type="radio"]:checked + label {
-  background: #4f46e5;
-  color: white;
-  border-color: #4f46e5;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
 }
 
 /* Responsive Design */
