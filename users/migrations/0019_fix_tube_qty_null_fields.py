@@ -153,7 +153,7 @@ class Migration(migrations.Migration):
     atomic = True  # Ensures the migration runs in a transaction
 
     dependencies = [
-        ('users', '0018_post_data'),
+        ('users', '0020_fix_tube_qty_null_fields'),  # Changed to depend on 0020 which removes the M2M field
     ]
 
     operations = [
