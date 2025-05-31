@@ -157,25 +157,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # First set up the ForeignKey relationship with related_name
-        migrations.AlterField(
-            model_name='tube_qty',
-            name='order_id',
-            field=models.ForeignKey(
-                on_delete=models.deletion.CASCADE,
-                to='users.Orders',
-                verbose_name='Номер заказа',
-                related_name='tubes'
-            ),
-        ),
-
-        # Then remove the M2M field
-        migrations.RemoveField(
-            model_name='orders',
-            name='tubes',
-        ),
-
-        # Then validate and backup data
+        # First validate and backup data
         migrations.RunPython(
             validate_data,
             reverse_code=reverse_migration,
@@ -193,6 +175,17 @@ class Migration(migrations.Migration):
             elidable=False
         ),
 
+        # Set up the ForeignKey relationships
+        migrations.AlterField(
+            model_name='tube_qty',
+            name='order_id',
+            field=models.ForeignKey(
+                on_delete=models.deletion.CASCADE,
+                to='users.Orders',
+                verbose_name='Номер заказа',
+                related_name='tubes'
+            ),
+        ),
         migrations.AlterField(
             model_name='tube_qty',
             name='tube_type_id',
