@@ -7,15 +7,22 @@ def set_default_values(apps, schema_editor):
     Tube_qty.objects.filter(order_id__isnull=True).delete()  # Remove orphaned records
     Tube_qty.objects.filter(tube_type_id__isnull=True).delete()  # Remove invalid records
 
+def reverse_migration(apps, schema_editor):
+    # No reverse migration needed as we're just cleaning up data
+    pass
+
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),  # Make sure to replace with your actual last migration
+        ('users', '0018_post_data'),  # Updated to depend on the latest migration
     ]
 
     operations = [
         # First run the function to set default values
-        migrations.RunPython(set_default_values),
+        migrations.RunPython(
+            set_default_values,
+            reverse_code=reverse_migration
+        ),
 
         # Then modify the fields to be non-nullable
         migrations.AlterField(
