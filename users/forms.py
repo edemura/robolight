@@ -27,7 +27,6 @@ class OrdersForm(forms.Form):
     destination = forms.ChoiceField(
         choices=Sequences.make_choices(),
         label='Для направления в',
-        widget=ButtonGroupWidget(attrs={
-            'class': 'button-select-group',
-        })
+        widget=ButtonGroupWidget(),
+        required=True
     )
