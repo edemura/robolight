@@ -167,12 +167,6 @@ class Migration(migrations.Migration):
             reverse_code=reverse_migration,
             elidable=False
         ),
-        
-        # Then remove the M2M field from Orders
-        migrations.RemoveField(
-            model_name='orders',
-            name='tubes',
-        ),
 
         migrations.RunPython(
             set_default_values,
