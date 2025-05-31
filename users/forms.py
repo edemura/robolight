@@ -23,6 +23,7 @@ class OrdersForm(forms.Form):
         choices=Sequences.make_choices(),
         label='Для направления в',
         widget=forms.Select(attrs={
-            'class': 'form-select',
+            'class': 'button-select',
+            'aria-label': 'Выберите направление'
         })
     )
