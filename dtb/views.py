@@ -112,9 +112,9 @@ def orders_request(request):
         if form.is_valid():
             order = Orders()
             order.sequence_id = Sequences.objects.get(pk=form.cleaned_data['destination'])
+            order.total_tubes_qty = 0
             order.save()
             
-            total_tubes = 0
             # Process each tube quantity
             tubes = TubeType.objects.all()
             for tube in tubes:
@@ -122,15 +122,14 @@ def orders_request(request):
                 if tube_id in request.POST:
                     qty = int(request.POST[tube_id])
                     if qty > 0:  # Only create entries for non-zero quantities
-                        tube_qty = Tube_qty()
-                        tube_qty.order_id = order
-                        tube_qty.tube_type_id = tube
-                        tube_qty.tube_qty = qty
+                        tube_qty = Tube_qty(
+                            order_id=order,
+                            tube_type_id=tube,
+                            tube_qty=qty
+                        )
                         tube_qty.save()
-                        order.tubes.add(tube_qty)
-                        total_tubes += qty
+                        order.total_tubes_qty += qty
             
-            order.total_tubes_qty = total_tubes
             order.save()
 
             #Тут мы должны сослаться на таск, который создаст Robo7Task

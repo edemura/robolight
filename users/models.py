@@ -515,8 +515,6 @@ class Orders(models.Model):
 
     create_datetime = models.DateTimeField(null=True, auto_now=False, auto_now_add=True, verbose_name='Создано')
 
-    tubes = models.ManyToManyField("Tube_qty")
-
     total_tubes_qty = models.IntegerField(
         null=True, 
        default=0,
@@ -525,12 +523,6 @@ class Orders(models.Model):
     def __str__(self):
         return str(self.pk)+' от '+str(self.create_datetime)
 
-    #def refresh_from_db(self):
-    #    self.total_tubes_qty = 2
-    #    super().refresh_from_db()
-
-    #file=models.TextField(null=True, default=None, verbose_name="Имя файла")
-
 class Tube_qty(models.Model):
     class Meta:
         verbose_name=_('Пробирки в заказе')
@@ -538,27 +530,26 @@ class Tube_qty(models.Model):
 
     order_id=models.ForeignKey(
        "users.Orders",
-       null=True, 
-       default=None,
-        on_delete=models.CASCADE,
-        verbose_name="Номер заказа"
+       null=False,
+       on_delete=models.CASCADE,
+       verbose_name="Номер заказа",
+       related_name='tubes'
     )
 
     tube_type_id=models.ForeignKey(
        "users.TubeType",
-       null=True, 
-       default=None,
-        on_delete=models.CASCADE,
-        verbose_name="Вид пробирки"
+       null=False,
+       on_delete=models.CASCADE,
+       verbose_name="Вид пробирки"
     )
 
     tube_qty = models.IntegerField(
-        null=True, 
+       null=False,
        default=1,
        verbose_name="Количество")
     
-    #def __str__(self):
-    #    return str(self.sequence_name)
+    def __str__(self):
+        return f"{self.tube_type_id} - {self.tube_qty} шт."
 
 class Post_data(models.Model):
     class Meta:
