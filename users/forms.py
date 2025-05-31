@@ -8,6 +8,11 @@ class BroadcastForm(forms.Form):
     broadcast_text = forms.CharField(widget=forms.Textarea)
 
 
+class ButtonGroupWidget(forms.RadioSelect):
+    template_name = 'widgets/button_group.html'
+    option_template_name = 'widgets/button_group_option.html'
+
+
 ch = [[1, 'ЦКДЛ'], [2, 'Внутренняя лаборатория']]
 
 
@@ -22,8 +27,7 @@ class OrdersForm(forms.Form):
     destination = forms.ChoiceField(
         choices=Sequences.make_choices(),
         label='Для направления в',
-        widget=forms.Select(attrs={
-            'class': 'button-select',
-            'aria-label': 'Выберите направление'
+        widget=ButtonGroupWidget(attrs={
+            'class': 'button-select-group',
         })
     )

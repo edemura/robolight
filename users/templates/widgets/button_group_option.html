@@ -1,0 +1,8 @@
+{% if widget.wrap_label %}
+    <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}_{{ widget.index }}"{% endif %}>
+{% endif %}
+    <input type="radio" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}{% if widget.attrs.id %} id="{{ widget.attrs.id }}_{{ widget.index }}"{% endif %} {% include "django/forms/widgets/attrs.html" %}{% if widget.checked %} checked{% endif %}>
+{% if widget.wrap_label %}
+    {{ widget.label }}
+    </label>
+{% endif %} 
