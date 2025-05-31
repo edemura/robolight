@@ -1,13 +1,61 @@
-<div>
-    <form action="/orders/" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <p> Создать заказ для внутренней лаборатории</p>
-        {% for tube in tubes %}
-        <li>{{ tube }} <input type="number" id={{ tube.id }} name={{ forloop.counter }} min="1" max="5" default="0" /></li>
-        {% endfor %}
-        <input type="submit" value="Создать">
-    </form>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/order.css' %}">
+</head>
+<body>
+    <div class="order-container">
+        <form class="order-form" action="/orders/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            
+            <ul class="tube-list">
+            {% for tube in tubes %}
+                <li class="tube-item">{{ tube }} <input type="number" id={{ tube.id }} name={{ forloop.counter }} min="1" max="5" default="0" /></li>
+            {% endfor %}
+            </ul>
+            <input type="submit" value="Создать" class="submit-button">
+        </form>
+    </div>
+</body>
+</html>
 
+<style>
+    p {
+      color: blue;
+      font-size: 20px;
+    }
+    div {
+      margin-top: 10%;  
+      margin-left: 10%;
+      align-self: center;
+      font-size: 26px;
+    }
+    form {
+      margin-top: 10%;  
+      margin-left: 10%;
+      align-self: center;
+      font-size: 26px;
+    }
+        
     
-</div>
+    .spinner-arrows {
+    position: absolute;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    }
+
+    /* Пользовательская кнопка для увеличения значения */
+    .spinner-arrows .up {
+    background-color: blue;
+    }
+
+    /* Пользовательская кнопка для уменьшения значения */
+    .spinner-arrows .down {
+    background-color: red;
+    }
+    
+  </style>
