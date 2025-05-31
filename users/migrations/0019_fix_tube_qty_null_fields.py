@@ -6,7 +6,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-def backup_m2m_data(apps, schema_editor):
+def backup_data(apps, schema_editor):
     try:
         Orders = apps.get_model('users', 'Orders')
         Tube_qty = apps.get_model('users', 'Tube_qty')
@@ -41,7 +41,7 @@ def backup_m2m_data(apps, schema_editor):
         with open(backup_file, 'w', encoding='utf-8') as f:
             json.dump(backup_data, f, indent=2, ensure_ascii=False)
         
-        logger.info(f"Relationship backup created at {backup_file}")
+        logger.info(f"Data backup created at {backup_file}")
         logger.info(f"Backed up {len(backup_data)} orders with their tube relationships")
         
         return True
@@ -49,7 +49,7 @@ def backup_m2m_data(apps, schema_editor):
         logger.error(f"Failed to create backup: {str(e)}")
         raise
 
-def validate_m2m_data(apps, schema_editor):
+def validate_data(apps, schema_editor):
     try:
         Orders = apps.get_model('users', 'Orders')
         Tube_qty = apps.get_model('users', 'Tube_qty')
@@ -92,7 +92,7 @@ def validate_m2m_data(apps, schema_editor):
             logger.warning(f"Found {orphaned_tubes} orphaned Tube_qty records")
         
         # Log validation results
-        logger.info("Relationship Validation Results:")
+        logger.info("Data Validation Results:")
         logger.info(f"Total Orders: {stats['total_orders']}")
         logger.info(f"Orders with tubes: {stats['orders_with_tubes']}")
         logger.info(f"Orders without tubes: {stats['orders_without_tubes']}")
@@ -157,14 +157,20 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # First validate and backup data
+        # First remove the M2M field
+        migrations.RemoveField(
+            model_name='orders',
+            name='tubes',
+        ),
+
+        # Then validate and backup data
         migrations.RunPython(
-            validate_m2m_data,
+            validate_data,
             reverse_code=reverse_migration,
             elidable=False
         ),
         migrations.RunPython(
-            backup_m2m_data,
+            backup_data,
             reverse_code=reverse_migration,
             elidable=False
         ),
