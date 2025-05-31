@@ -8,6 +8,9 @@ from pathlib import Path
 import platform
 import shutil
 import json
+import threading
+import queue
+import time
 
 class DeployError(Exception):
     """Custom exception for deployment errors"""
@@ -112,6 +115,50 @@ def run_command(command, error_message="Command failed"):
             command=command,
             details={"exception_type": type(e).__name__}
         )
+
+def monitor_docker_logs(error_queue, stop_event):
+    """Monitor Docker logs in a separate thread."""
+    try:
+        process = subprocess.Popen(
+            "docker logs -f dtb_django",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=True,
+            text=True,
+            bufsize=1,
+            universal_newlines=True
+        )
+
+        while not stop_event.is_set():
+            # Check stdout
+            stdout_line = process.stdout.readline()
+            if stdout_line:
+                if 'error' in stdout_line.lower() or 'exception' in stdout_line.lower():
+                    error_queue.put(('ERROR', stdout_line.strip()))
+                print(f"[Django] {stdout_line.strip()}")
+
+            # Check stderr
+            stderr_line = process.stderr.readline()
+            if stderr_line:
+                error_queue.put(('ERROR', stderr_line.strip()))
+                print(f"[Django Error] {stderr_line.strip()}")
+
+            # Check if process has ended
+            if process.poll() is not None:
+                break
+
+            # Small sleep to prevent high CPU usage
+            time.sleep(0.1)
+
+        # Clean up
+        process.terminate()
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            process.kill()
+
+    except Exception as e:
+        error_queue.put(('MONITOR_ERROR', str(e)))
 
 def get_git_changes():
     """Get a summary of changes since last commit with detailed error handling."""
@@ -292,8 +339,57 @@ def main():
             "docker-compose up -d --build",
             "Failed to rebuild and start Docker containers"
         )
+
+        # 6. Monitor Docker logs
+        print("\nMonitoring Django container logs for errors...")
+        error_queue = queue.Queue()
+        stop_event = threading.Event()
         
-        print("\n✓ All operations completed successfully!")
+        # Start log monitoring in a separate thread
+        monitor_thread = threading.Thread(
+            target=monitor_docker_logs,
+            args=(error_queue, stop_event)
+        )
+        monitor_thread.daemon = True
+        monitor_thread.start()
+
+        try:
+            # Monitor for 30 seconds or until error is found
+            monitoring_time = 30
+            start_time = time.time()
+            
+            while time.time() - start_time < monitoring_time:
+                try:
+                    error_type, error_msg = error_queue.get_nowait()
+                    if error_type == 'ERROR':
+                        raise DeployError(
+                            "Error detected in Django logs",
+                            details={
+                                "error_message": error_msg,
+                                "monitoring_duration": f"{time.time() - start_time:.1f}s"
+                            }
+                        )
+                    elif error_type == 'MONITOR_ERROR':
+                        raise DeployError(
+                            "Error monitoring Docker logs",
+                            details={
+                                "error_message": error_msg,
+                                "monitoring_duration": f"{time.time() - start_time:.1f}s"
+                            }
+                        )
+                except queue.Empty:
+                    # No errors in queue, continue monitoring
+                    time.sleep(0.5)
+                    sys.stdout.write(f"\rMonitoring logs... {monitoring_time - int(time.time() - start_time)}s remaining")
+                    sys.stdout.flush()
+
+            print("\n✓ No errors detected in logs during startup!")
+            print("\n✓ All operations completed successfully!")
+
+        finally:
+            # Stop the monitoring thread
+            stop_event.set()
+            monitor_thread.join(timeout=5)
 
     except DeployError as e:
         log_error(e, "Deployment Error")

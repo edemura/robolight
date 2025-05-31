@@ -153,11 +153,17 @@ class Migration(migrations.Migration):
     atomic = True  # Ensures the migration runs in a transaction
 
     dependencies = [
-        ('users', '0020_fix_tube_qty_null_fields'),  # Changed to depend on 0020 which removes the M2M field
+        ('users', '0018_post_data'),
     ]
 
     operations = [
-        # First validate and backup data
+        # First remove the M2M field
+        migrations.RemoveField(
+            model_name='orders',
+            name='tubes',
+        ),
+
+        # Then validate and backup data
         migrations.RunPython(
             validate_data,
             reverse_code=reverse_migration,
