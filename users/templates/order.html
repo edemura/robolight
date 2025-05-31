@@ -12,12 +12,30 @@
             
             <ul class="tube-list">
             {% for tube in tubes %}
-                <li class="tube-item">{{ tube }} <input type="number" id={{ tube.id }} name={{ forloop.counter }} min="1" max="5" default="0" /></li>
+                <li class="tube-item">
+                    {{ tube }}
+                    <div class="number-control">
+                        <input type="number" id={{ tube.id }} name={{ forloop.counter }} min="1" max="5" value="1" />
+                        <div class="spinner-buttons">
+                            <button type="button" class="spinner-button up" onclick="this.previousElementSibling.stepUp()"></button>
+                            <button type="button" class="spinner-button down" onclick="this.previousElementSibling.previousElementSibling.stepDown()"></button>
+                        </div>
+                    </div>
+                </li>
             {% endfor %}
             </ul>
             <input type="submit" value="Создать" class="submit-button">
         </form>
     </div>
+
+    <script>
+        // Prevent form submission on spinner button clicks
+        document.querySelectorAll('.spinner-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+            });
+        });
+    </script>
 </body>
 </html>
 

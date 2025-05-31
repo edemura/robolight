@@ -61,6 +61,7 @@ input:focus, select:focus, textarea:focus {
   background-color: #f8fafc;
   border-radius: 8px;
   transition: transform 0.2s ease;
+  position: relative;
 }
 
 .tube-item:hover {
@@ -77,12 +78,58 @@ input:focus, select:focus, textarea:focus {
   border-radius: 6px;
   padding: 0.5rem;
   background: white;
+  position: relative;
+  -moz-appearance: textfield; /* Firefox */
 }
 
-.tube-item input[type="number"]::-webkit-inner-spin-button,
-.tube-item input[type="number"]::-webkit-outer-spin-button {
+/* Custom spinner buttons */
+.tube-item input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  background: url("data:image/svg+xml,%3Csvg width='16' height='26' viewBox='0 0 16 26' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0L15 6H1L8 0Z' fill='%234a5568'/%3E%3Cpath d='M8 26L1 20H15L8 26Z' fill='%234a5568'/%3E%3C/svg%3E") no-repeat center center;
+  width: 32px;
+  height: 100%;
+  position: absolute;
+  right: -36px;
+  top: 0;
+  cursor: pointer;
   opacity: 1;
+  margin: 0;
+}
+
+.tube-item .number-control {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 8px;
+}
+
+.tube-item .spinner-button {
+  width: 32px;
   height: 24px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.tube-item .spinner-button:hover {
+  background: #e2e8f0;
+}
+
+.tube-item .spinner-button.up::after {
+  content: "▲";
+  font-size: 12px;
+  color: #4a5568;
+}
+
+.tube-item .spinner-button.down::after {
+  content: "▼";
+  font-size: 12px;
+  color: #4a5568;
 }
 
 /* Submit Button Styles */
