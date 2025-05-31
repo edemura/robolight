@@ -35,10 +35,10 @@
                 <div class="number-control">
                     <input type="number" 
                            id="tube_{{ tube.id }}" 
-                           name="tube_{{ forloop.counter }}" 
-                           min="1" 
+                           name="tube_{{ tube.id }}" 
+                           min="0" 
                            max="5" 
-                           value="1"
+                           value="0"
                            data-tube-name="{{ tube }}" />
                     <div class="spinner-buttons">
                         <button type="button" class="spinner-button up" data-action="increment"></button>
