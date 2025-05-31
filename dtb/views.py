@@ -129,9 +129,6 @@ def orders_request(request):
 
 
         return HttpResponseRedirect("/orders/")
-        
-        
-        return HttpResponseRedirect("/orders/")
     else:
         form = OrdersForm()
         tubes = TubeType.objects.all()
