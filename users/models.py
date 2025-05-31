@@ -523,6 +523,10 @@ class Orders(models.Model):
     def __str__(self):
         return str(self.pk)+' от '+str(self.create_datetime)
 
+    @property
+    def tubes_list(self):
+        return self.tubes.all()
+
 class Tube_qty(models.Model):
     class Meta:
         verbose_name=_('Пробирки в заказе')

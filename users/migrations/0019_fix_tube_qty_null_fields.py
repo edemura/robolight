@@ -117,6 +117,8 @@ def validate_m2m_data(apps, schema_editor):
 def set_default_values(apps, schema_editor):
     try:
         Tube_qty = apps.get_model('users', 'Tube_qty')
+        Orders = apps.get_model('users', 'Orders')
+
         # Log initial counts
         initial_count = Tube_qty.objects.count()
         null_qty_count = Tube_qty.objects.filter(tube_qty__isnull=True).count()
