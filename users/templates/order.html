@@ -8,7 +8,10 @@
     <div class="order-container">
         <form class="order-form" action="/orders/" method="post">
             {% csrf_token %}
-            {{ form }}
+            <div class="form-row">
+                <label for="{{ form.destination.id_for_label }}">{{ form.destination.label }}</label>
+                {{ form.destination }}
+            </div>
             
             <ul class="tube-list">
             {% for tube in tubes %}

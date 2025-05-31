@@ -180,6 +180,40 @@ label {
   color: #4a5568;
 }
 
+/* Inline Form Field Styles */
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-row label {
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+.form-row select {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.form-row select:hover {
+  border-color: #cbd5e0;
+}
+
+.form-row select:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+  outline: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .order-container {
