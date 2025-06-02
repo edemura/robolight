@@ -51,7 +51,7 @@ def broadcast_message(
 #мое
     
 from celery import shared_task
-from users.models import Incomejson, TaskJson, Robo7Task, Analysis, AnalysisSet, TrayTube, Filename, Label, ManualTask
+from users.models import Incomejson, TaskJson, Robo7Task, Analysis, AnalysisSet, TrayTube, Filename, Label, ManualTask, Task_source
 from time import sleep
 from datetime import datetime
 
@@ -77,13 +77,15 @@ def make_robo7Task():
             task.analysis=i.analysis_name
             task.code=i.barcode
             task.create_datetime=datetime.now()
+            # Set task source for JSON API
+            task.task_source = Task_source.objects.get(source_name="JSON API")
             task.save()
             i.is_task_set=True
             i.save()
         except Exception as e:
             i.is_task_set=False
             i.exception_text=f"Failed to make task {type(e)}, reason: {e}"
-            i.save() 
+            i.save()
 
 
 #Создание из экземпляра ManualTask типа задание для ROBO7   
@@ -98,6 +100,8 @@ def make_robo7Task_manual():
             #Analysis.objects.get(pk=i.analysis).analysis_name
             task.code=i.barcode
             task.create_datetime=datetime.now()
+            # Set task source for manual input
+            task.task_source = Task_source.objects.get(source_name="Ручной ввод")
             task.save()
             i.is_task_set=True
             i.save()

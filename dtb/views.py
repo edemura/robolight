@@ -15,6 +15,7 @@ from users.models import TubeType
 from users.models import Post_data
 from users.models import Sequences
 from users.models import Tube_qty
+from users.models import Task_source
 from django.core import serializers
 
 from django.shortcuts import render
@@ -132,7 +133,13 @@ def orders_request(request):
             
             order.save()
 
-            #Тут мы должны сослаться на таск, который создаст Robo7Task
+            # Create Robo7Task with form source
+            task = Robo7Task()
+            task.patient_fio = "Order #" + str(order.id)  # You may want to customize this
+            task.analysis = "Order Form"  # You may want to customize this
+            task.code = str(order.id)  # You may want to customize this
+            task.task_source = Task_source.objects.get(source_name="Форма заказа")
+            task.save()
 
         return HttpResponseRedirect("/orders/")
     else:
