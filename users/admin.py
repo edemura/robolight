@@ -14,6 +14,7 @@ from users.models import Orders
 from users.models import Sequences
 from users.models import Tube_qty
 from users.models import Post_data
+from users.models import Task_source
 
 from users.models import TubeType, TrayTube, Analysis, AnalysisSet, DataFile
 
@@ -82,10 +83,10 @@ def delete_data(modeladmin, request, queryset):
 @admin.register(Robo7Task) 
 class Robo7TaskAdmin(admin.ModelAdmin):
     list_display=['patient_fio', 'analysis', 'code', 'tray_num', 'queue_num', 'is_tray_assigned',
-                  'is_validated', 'filename', 'is_filename', 'label', 'is_label', 'is_sent', 'is_complete', 'update_datetime', 'create_datetime', 'filenameok','tray_num_task', 'exception_text',]
+                  'is_validated', 'filename', 'is_filename', 'label', 'is_label', 'is_sent', 'is_complete', 'update_datetime', 'create_datetime', 'filenameok','tray_num_task', 'exception_text', 'task_source']
     fieldsets = [
         (None, {"fields": ['patient_fio', 'analysis', 'code', 'tray_num', 'queue_num', 'is_tray_assigned',
-                  'is_validated', 'filename', 'is_filename', 'label', 'is_label', 'is_sent', 'is_complete', 'update_datetime','create_datetime','filenameok','tray_num_task','exception_text',]}),
+                  'is_validated', 'filename', 'is_filename', 'label', 'is_label', 'is_sent', 'is_complete', 'update_datetime','create_datetime','filenameok','tray_num_task','exception_text', 'task_source']}),
         
     ]
     readonly_fields = ('create_datetime', 'update_datetime',)
@@ -219,3 +220,8 @@ class OrdersAdmin(admin.ModelAdmin):
 @admin.register(Post_data) 
 class Post_dataAdmin(admin.ModelAdmin):
     list_display = ['text']
+
+@admin.register(Task_source)
+class Task_sourceAdmin(admin.ModelAdmin):
+    list_display = ['source_name']
+    search_fields = ['source_name']

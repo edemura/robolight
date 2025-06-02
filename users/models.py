@@ -92,7 +92,19 @@ class Location(CreateTracker):
 
 
 #Все что ниже самописное для робо7
-    
+
+#Источник заданий
+
+class Task_source(models.Model):
+    class Meta:
+        verbose_name=_('Источник заданий')
+        verbose_name_plural=_('Источники заданий')
+
+    source_name=models.CharField(max_length=255, verbose_name="Наименование источника")
+
+    def __str__(self):
+        return self.source_name
+
 #Задачи robo7
 
 class Robo7Task(models.Model):
@@ -119,6 +131,13 @@ class Robo7Task(models.Model):
   update_datetime = models.DateTimeField(null=True, auto_now=True, auto_now_add=False, verbose_name='Изменено')
   tray_num_task = models.IntegerField(null=True, default=0, verbose_name="tray num за текущую дату")
   exception_text=models.TextField(null=True, default=None, verbose_name="Ошибка")
+  task_source = models.ForeignKey(
+    "users.Task_source",
+    on_delete=models.SET_NULL,
+    null=True,
+    default=None,
+    verbose_name="Источник задания"
+  )
 
   def __str__(self):
     return self.patient_fio+' '+self.code+' '+str(self.create_datetime)
