@@ -7,6 +7,21 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
+def create_initial_task_sources(apps, schema_editor):
+    # Get the historical version of the model
+    Task_source = apps.get_model('users', 'Task_source')
+    
+    # Create initial sources
+    sources = [
+        "Ручной ввод",
+        "JSON API",
+        "Форма заказа",
+        "Внешняя система"
+    ]
+    
+    for source_name in sources:
+        Task_source.objects.get_or_create(source_name=source_name)
+
 def backup_data(apps, schema_editor):
     try:
         Orders = apps.get_model('users', 'Orders')
@@ -164,6 +179,26 @@ class Migration(migrations.Migration):
             name='tubes',
         ),
 
+        # Create Task_source model
+        migrations.CreateModel(
+            name='Task_source',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('source_name', models.CharField(max_length=255, verbose_name='Наименование источника')),
+            ],
+            options={
+                'verbose_name': 'Источник заданий',
+                'verbose_name_plural': 'Источники заданий',
+            },
+        ),
+
+        # Add task_source field to Robo7Task
+        migrations.AddField(
+            model_name='robo7task',
+            name='task_source',
+            field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.task_source', verbose_name='Источник задания'),
+        ),
+
         # Then validate and backup data
         migrations.RunPython(
             validate_data,
@@ -177,6 +212,11 @@ class Migration(migrations.Migration):
         ),
         migrations.RunPython(
             set_default_values,
+            reverse_code=reverse_migration,
+            elidable=False
+        ),
+        migrations.RunPython(
+            create_initial_task_sources,
             reverse_code=reverse_migration,
             elidable=False
         ),
