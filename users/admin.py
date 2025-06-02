@@ -82,11 +82,11 @@ def delete_data(modeladmin, request, queryset):
 
 @admin.register(Robo7Task) 
 class Robo7TaskAdmin(admin.ModelAdmin):
-    list_display=['patient_fio', 'analysis', 'code', 'tray_num', 'queue_num', 'is_tray_assigned',
-                  'is_validated', 'filename', 'is_filename', 'label', 'is_label', 'is_sent', 'is_complete', 'update_datetime', 'create_datetime', 'filenameok','tray_num_task', 'exception_text', 'task_source']
+    list_display=['task_source', 'patient_fio', 'analysis', 'code', 'tray_num', 'queue_num', 'is_tray_assigned',
+                  'is_validated', 'filename', 'is_filename', 'label', 'is_label', 'is_sent', 'is_complete', 'update_datetime', 'create_datetime', 'filenameok','tray_num_task', 'exception_text']
     fieldsets = [
-        (None, {"fields": ['patient_fio', 'analysis', 'code', 'tray_num', 'queue_num', 'is_tray_assigned',
-                  'is_validated', 'filename', 'is_filename', 'label', 'is_label', 'is_sent', 'is_complete', 'update_datetime','create_datetime','filenameok','tray_num_task','exception_text', 'task_source']}),
+        (None, {"fields": ['task_source', 'patient_fio', 'analysis', 'code', 'tray_num', 'queue_num', 'is_tray_assigned',
+                  'is_validated', 'filename', 'is_filename', 'label', 'is_label', 'is_sent', 'is_complete', 'update_datetime','create_datetime','filenameok','tray_num_task','exception_text']}),
         
     ]
     readonly_fields = ('create_datetime', 'update_datetime',)
