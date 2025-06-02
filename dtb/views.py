@@ -118,7 +118,7 @@ def orders_request(request):
             # Process each tube quantity
             tubes = TubeType.objects.all()
             for tube in tubes:
-                tube_id = str(tube.id)
+                tube_id = "tube_"+str(tube.id)
                 if tube_id in request.POST:
                     qty = int(request.POST[tube_id])
                     if qty > 0:  # Only create entries for non-zero quantities
