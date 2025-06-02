@@ -1,4 +1,5 @@
 from django.db import migrations, models
+import django.db.models.deletion
 import logging
 import json
 from datetime import datetime
@@ -174,7 +175,6 @@ class Migration(migrations.Migration):
             reverse_code=reverse_migration,
             elidable=False
         ),
-
         migrations.RunPython(
             set_default_values,
             reverse_code=reverse_migration,
@@ -186,7 +186,7 @@ class Migration(migrations.Migration):
             model_name='tube_qty',
             name='order_id',
             field=models.ForeignKey(
-                on_delete=models.deletion.CASCADE,
+                on_delete=django.db.models.deletion.CASCADE,
                 to='users.Orders',
                 verbose_name='Номер заказа',
                 related_name='tubes'
@@ -196,7 +196,7 @@ class Migration(migrations.Migration):
             model_name='tube_qty',
             name='tube_type_id',
             field=models.ForeignKey(
-                on_delete=models.deletion.CASCADE,
+                on_delete=django.db.models.deletion.CASCADE,
                 to='users.TubeType',
                 verbose_name='Вид пробирки'
             ),
@@ -204,9 +204,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='tube_qty',
             name='tube_qty',
-            field=models.IntegerField(
-                default=1,
-                verbose_name='Количество'
-            ),
+            field=models.IntegerField(default=1, verbose_name='Количество'),
         ),
     ] 

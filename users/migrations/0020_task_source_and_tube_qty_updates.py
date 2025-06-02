@@ -169,16 +169,10 @@ class Migration(migrations.Migration):
     atomic = True  # Ensures the migration runs in a transaction
 
     dependencies = [
-        ('users', '0018_post_data'),
+        ('users', '0019_fix_tube_qty_null_fields'),  # Updated to depend on 0019
     ]
 
     operations = [
-        # First remove the M2M field
-        migrations.RemoveField(
-            model_name='orders',
-            name='tubes',
-        ),
-
         # Create Task_source model
         migrations.CreateModel(
             name='Task_source',
@@ -199,51 +193,10 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.task_source', verbose_name='Источник задания'),
         ),
 
-        # Then validate and backup data
-        migrations.RunPython(
-            validate_data,
-            reverse_code=reverse_migration,
-            elidable=False
-        ),
-        migrations.RunPython(
-            backup_data,
-            reverse_code=reverse_migration,
-            elidable=False
-        ),
-        migrations.RunPython(
-            set_default_values,
-            reverse_code=reverse_migration,
-            elidable=False
-        ),
+        # Create initial task sources
         migrations.RunPython(
             create_initial_task_sources,
             reverse_code=reverse_migration,
             elidable=False
-        ),
-
-        # Set up the ForeignKey relationships
-        migrations.AlterField(
-            model_name='tube_qty',
-            name='order_id',
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE,
-                to='users.Orders',
-                verbose_name='Номер заказа',
-                related_name='tubes'
-            ),
-        ),
-        migrations.AlterField(
-            model_name='tube_qty',
-            name='tube_type_id',
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE,
-                to='users.TubeType',
-                verbose_name='Вид пробирки'
-            ),
-        ),
-        migrations.AlterField(
-            model_name='tube_qty',
-            name='tube_qty',
-            field=models.IntegerField(default=1, verbose_name='Количество'),
         ),
     ] 
