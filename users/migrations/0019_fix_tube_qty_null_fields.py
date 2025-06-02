@@ -173,13 +173,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # First remove the M2M field
-        migrations.RemoveField(
-            model_name='orders',
-            name='tubes',
-        ),
-
-        # Create Task_source model
+        # Create Task_source model first
         migrations.CreateModel(
             name='Task_source',
             fields=[
