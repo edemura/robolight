@@ -134,12 +134,12 @@ def orders_request(request):
             order.save()
 
             # Create Robo7Task with form source
-            task = Robo7Task()
-            task.patient_fio = "Order #" + str(order.id)  # You may want to customize this
-            task.analysis = "Order Form"  # You may want to customize this
-            task.code = str(order.id)  # You may want to customize this
-            task.task_source = Task_source.objects.get(source_name="Форма заказа")
-            task.save()
+            # task = Robo7Task()
+            # task.patient_fio = "Order #" + str(order.id)  # You may want to customize this
+            # task.analysis = "Order Form"  # You may want to customize this
+            # task.code = str(order.id)  # You may want to customize this
+            # task.task_source = Task_source.objects.get(source_name="Форма заказа")
+            # task.save()
 
         return HttpResponseRedirect("/orders/")
     else:
