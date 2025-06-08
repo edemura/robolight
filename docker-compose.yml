@@ -21,7 +21,7 @@ services:
       dockerfile: LocalDockerfile
     container_name: dtb_django
     restart: always
-    command: bash -c "python manage.py makemigrations users --name fix_tube_qty_null_fields && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py migrate users zero --fake && python manage.py migrate users 0019_task_source_and_tube_updates --fake && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
