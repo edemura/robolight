@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0020_add_task_sources'),
+        ('users', '0019_task_source_and_tube_updates'),
     ]
 
     operations = [
