@@ -10,6 +10,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # The tubes field was already removed or doesn't exist in the current model
-        # No operations needed
-    ] 
+        migrations.RemoveField(
+            model_name='orders',
+            name='tubes',
+        ),
+    ]
