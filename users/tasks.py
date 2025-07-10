@@ -13,6 +13,7 @@ from tgbot.handlers.broadcast_message.utils import send_one_message, from_celery
     from_celery_markup_to_markup
 import os
 from pathlib import Path
+import logging
 
 logger = get_task_logger(__name__)
 
@@ -290,6 +291,7 @@ def remove_all_data():
 def R7FromOrders(order_id):
     from users.models import Orders, Robo7Task, Task_source, Tube_qty
     from datetime import datetime
+    import traceback
     try:
         order = Orders.objects.get(pk=order_id)
         tubes = Tube_qty.objects.filter(order_id=order)
@@ -303,6 +305,6 @@ def R7FromOrders(order_id):
                 create_datetime=datetime.now(),
                 task_source=task_source
             )
+            logger.info(f"Created Robo7Task for order {order.id}, tube {tube.tube_type_id}")
     except Exception as e:
-        # Optionally log or handle the error
-        pass 
+        logger.error(f"Failed to create Robo7Task from Orders {order_id}: {e}\n{traceback.format_exc()}") 

@@ -23,6 +23,9 @@ from django.shortcuts import render
 from users.forms import OrdersForm
 from django.http import HttpResponseRedirect
 
+import os
+from django.conf import settings
+
 logger = logging.getLogger(__name__)
 
 
@@ -146,4 +149,16 @@ def orders_request(request):
         form = OrdersForm()
         tubes = TubeType.objects.all()
     return render(request, "order.html", {"form": form, "tubes": tubes})
+
+
+def view_logs(request):
+    # Path to the log file (adjust as needed)
+    log_path = os.path.join(settings.BASE_DIR, 'celery.log')
+    if not os.path.exists(log_path):
+        return HttpResponse('Log file not found.')
+    with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+        lines = f.readlines()
+    # Show last 200 lines
+    last_lines = lines[-200:]
+    return HttpResponse('<pre>' + ''.join(last_lines) + '</pre>')
 
