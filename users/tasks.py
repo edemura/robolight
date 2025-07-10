@@ -284,3 +284,25 @@ def remove_all_data():
             pass
             #print(f'Ошибка при удалении файла {file_path}. {e}')
     
+
+# Создание задания для ROBO7 из Orders
+@app.task(ignore_result=True)
+def R7FromOrders(order_id):
+    from users.models import Orders, Robo7Task, Task_source, Tube_qty
+    from datetime import datetime
+    try:
+        order = Orders.objects.get(pk=order_id)
+        tubes = Tube_qty.objects.filter(order_id=order)
+        task_source = Task_source.objects.get(source_name="Order")
+        for tube in tubes:
+            # You may want to customize these fields based on your business logic
+            Robo7Task.objects.create(
+                patient_fio=f"Order #{order.id}",
+                analysis=str(tube.tube_type_id),
+                code=f"ORDER-{order.id}-TUBE-{tube.tube_type_id.id}",
+                create_datetime=datetime.now(),
+                task_source=task_source
+            )
+    except Exception as e:
+        # Optionally log or handle the error
+        pass 
