@@ -33,7 +33,9 @@ redis==4.3.4
 django-celery-beat==2.6.0
 
 # Telegram
+
 python-telegram-bot==20.0  # compatible with Python 3.13
+
 
 # monitoring
 # sentry-sdk

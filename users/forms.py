@@ -33,9 +33,11 @@ class OrdersForm(forms.Form):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         # Load choices lazily to avoid database queries during module import
         try:
             self.fields['destination'].choices = Sequences.make_choices()
         except Exception:
             # If database is not available, use empty choices
             self.fields['destination'].choices = []
+
