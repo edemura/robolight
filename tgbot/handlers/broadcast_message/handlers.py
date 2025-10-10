@@ -26,7 +26,7 @@ def broadcast_command_with_message(update: Update, context: CallbackContext):
             # user typed only command without text for the message.
             update.message.reply_text(
                 text=broadcast_wrong_format,
-                parse_mode=telegram.ParseMode.HTML,
+                parse_mode="HTML",
             )
             return
 
@@ -36,13 +36,13 @@ def broadcast_command_with_message(update: Update, context: CallbackContext):
         try:
             update.message.reply_text(
                 text=text,
-                parse_mode=telegram.ParseMode.HTML,
+                parse_mode="HTML",
                 reply_markup=markup,
             )
         except telegram.error.BadRequest as e:
             update.message.reply_text(
                 text=error_with_html.format(reason=e),
-                parse_mode=telegram.ParseMode.HTML,
+                parse_mode="HTML",
             )
 
 

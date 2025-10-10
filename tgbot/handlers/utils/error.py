@@ -41,7 +41,7 @@ Return to /start
         context.bot.send_message(
             chat_id=TELEGRAM_LOGS_CHAT_ID,
             text=admin_message,
-            parse_mode=telegram.ParseMode.HTML,
+            parse_mode="HTML",
         )
     else:
         logging.error(admin_message)

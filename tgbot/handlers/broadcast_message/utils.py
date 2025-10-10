@@ -45,7 +45,7 @@ def from_celery_entities_to_entities(celery_entities: Optional[List[Dict]] = Non
 def send_one_message(
     user_id: Union[str, int],
     text: str,
-    parse_mode: Optional[str] = telegram.ParseMode.HTML,
+    parse_mode: Optional[str] = "HTML",
     reply_markup: Optional[List[List[Dict]]] = None,
     reply_to_message_id: Optional[int] = None,
     disable_web_page_preview: Optional[bool] = None,

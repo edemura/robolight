@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             name='Sequences',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sequence_name', models.CharField(default=None, null=True, verbose_name='Наименование последовательности')),
+                ('sequence_name', models.CharField(default=None, max_length=255, null=True, verbose_name='Наименование последовательности')),
                 ('is_active', models.BooleanField(default=False, verbose_name='Последовательность активна')),
                 ('digits_number', models.IntegerField(verbose_name='Количество знаков(длина последовательности)')),
                 ('current_number', models.IntegerField(null=True, verbose_name='Текущее значение')),

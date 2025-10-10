@@ -66,6 +66,6 @@ def show_file_id(update: Update, context: CallbackContext) -> None:
         message_id = update_json["message"]["message_id"]
         update.message.reply_text(
             text=f"`{file_id}`",
-            parse_mode=telegram.ParseMode.HTML,
+            parse_mode="HTML",
             reply_to_message_id=message_id
         )

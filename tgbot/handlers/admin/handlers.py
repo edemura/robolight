@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.utils.timezone import now
-from telegram import ParseMode, Update
+from telegram import Update
 from telegram.ext import CallbackContext
 
 from tgbot.handlers.admin import static_text
@@ -26,7 +26,7 @@ def stats(update: Update, context: CallbackContext) -> None:
 
     update.message.reply_text(
         text,
-        parse_mode=ParseMode.HTML,
+        parse_mode="HTML",
         disable_web_page_preview=True,
     )
 

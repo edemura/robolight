@@ -8,7 +8,8 @@ from dtb.settings import TELEGRAM_TOKEN
 
 
 bot = Bot(TELEGRAM_TOKEN)
-TELEGRAM_BOT_USERNAME = bot.get_me()["username"]
+# Note: get_me() is now async in v20, so we'll get the username when needed
+TELEGRAM_BOT_USERNAME = None
 # Global variable - the best way I found to init Telegram bot
 try:
     pass

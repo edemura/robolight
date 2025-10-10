@@ -1,7 +1,8 @@
 from functools import wraps
 from typing import Callable
 
-from telegram import Update, ChatAction
+from telegram import Update
+from telegram.constants import ChatAction
 from telegram.ext import CallbackContext
 
 from users.models import User
