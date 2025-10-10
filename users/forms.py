@@ -25,8 +25,12 @@ class OrdersForm(forms.Form):
     #tube_type3=forms.IntegerField(max_value=10, min_value=0, label=TubeType.make_choices()[2])  
     
     destination = forms.ChoiceField(
-        choices=Sequences.make_choices(),
+        choices=[],
         label='Для направления в',
         widget=ButtonGroupWidget(),
         required=True
     )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['destination'].choices = Sequences.make_choices()

@@ -502,7 +502,7 @@ class Sequences(models.Model):
         verbose_name=_('Последовательность нумерации')
         verbose_name_plural=_('Последовательности нумерации')
 
-    sequence_name=models.CharField(null=True, default=None, verbose_name="Наименование последовательности")
+    sequence_name=models.CharField(max_length=255, null=True, default=None, verbose_name="Наименование последовательности")
     is_active=models.BooleanField(null=False, default=False, verbose_name="Последовательность активна")
     digits_number=models.IntegerField(null=False, verbose_name="Количество знаков(длина последовательности)")
     current_number=models.IntegerField(null=True, verbose_name="Текущее значение")
